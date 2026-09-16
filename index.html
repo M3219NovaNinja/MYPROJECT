@@ -109,7 +109,7 @@
     let count = 0;
     document.getElementById('status').innerText = "Randomizing...";
     let timer = setInterval(() => {
-      let random = available[Math.floor(Math.random() * available.length)].n;
+      let random = available[Math.floor(Math.random() * available.length)].name;
       document.getElementById('result').innerText = random;
       count++;
       if(count > 8) {
