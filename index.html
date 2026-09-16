@@ -81,9 +81,9 @@
     {name: "Crab Rice", type: ["seafood", "egg"]}, {name: "Salmon", type: ["fish"]}, {name: "Sushi", type: ["fish", "gluten"]}
   ];
 
-  let cListDiv = document.getElementById('cList');
+  let ChecklistDiv = document.getElementById('cList');
   tags.forEach(tag => {
-    cListDiv.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
+    ChecklistDiv.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
   });
 
   let available = [];
@@ -91,7 +91,6 @@
     let checked = Array.from(document.querySelectorAll('input:checked')).map(input => input.value);
     available = foods.filter(food => !food.type.some(x => checked.includes(x)));
     document.getElementById('count').innerText = "Available: " + available.length + " items";
-    
     if(available.length === 0) {
       document.getElementById('status').innerText = "Error";
       document.getElementById('result').innerText = "No food available!";
