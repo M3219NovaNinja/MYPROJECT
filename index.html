@@ -81,15 +81,17 @@
     {name: "Crab Rice", type: ["seafood", "egg"]}, {name: "Salmon", type: ["fish"]}, {name: "Sushi", type: ["fish", "gluten"]}
   ];
 
-  let CheckBox = document.getElementById('cList');
+  let cListDiv = document.getElementById('cList');
   tags.forEach(tag => {
-    CheckBox.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
+    cListDiv.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
   });
 
   let available = [];
   function updateList() {
-    let checked = Array.from(document.querySelectorAll('input:checked')).map(CheckBox => CheckBox.value);
-    available = foods.filter(foods => !foods.type.some(x => checked.includes(x)));
+    // เปลี่ยนชื่อตัวแปรใน map และ filter ไม่ให้ซ้ำกับตัวแปรด้านนอก
+    let checked = Array.from(document.querySelectorAll('input:checked')).map(input => input.value);
+    available = foods.filter(food => !food.type.some(x => checked.includes(x)));
+    
     document.getElementById('count').innerText = "Available: " + available.length + " items";
     
     if(available.length === 0) {
