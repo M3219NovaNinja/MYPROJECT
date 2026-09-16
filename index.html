@@ -88,10 +88,8 @@
 
   let available = [];
   function updateList() {
-    // เปลี่ยนชื่อตัวแปรใน map และ filter ไม่ให้ซ้ำกับตัวแปรด้านนอก
     let checked = Array.from(document.querySelectorAll('input:checked')).map(input => input.value);
     available = foods.filter(food => !food.type.some(x => checked.includes(x)));
-    
     document.getElementById('count').innerText = "Available: " + available.length + " items";
     
     if(available.length === 0) {
