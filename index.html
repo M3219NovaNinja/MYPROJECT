@@ -2,282 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe Food Randomizer</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Food Random</title>
 <style>
-  :root {
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --primary: #10b981;
-    --primary-hover: #059669;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-  }
-
   body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    min-height: 100vh;
+    background: #f0f2f5;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .card {
+    background: white;
     padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 350px;
   }
-
-  .container {
-    background-color: var(--card-bg);
-    border-radius: 24px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  h2 { margin-top: 0; font-size: 18px; }
+  .box {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    margin: 15px 0;
+  }
+  button {
     width: 100%;
-    max-width: 500px;
-    border: 1px solid var(--border);
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 8px;
-    color: #0f172a;
-  }
-
-  .subtitle {
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-  }
-
-  .allergy-section {
-    background-color: #f1f5f9;
-    padding: 16px;
-    border-radius: 16px;
-    margin-bottom: 24px;
-  }
-
-  .allergy-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #334155;
-  }
-
-  .allergy-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .checkbox-label input {
-    accent-color: var(--primary);
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-  }
-
-  .result-box {
-    text-align: center;
-    padding: 30px 20px;
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border: 2px dashed #34d399;
-    border-radius: 20px;
-    margin-bottom: 24px;
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .result-category {
-    font-size: 0.8rem;
-    color: #047857;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-
-  .result-name {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #065f46;
-  }
-
-  .btn-random {
-    width: 100%;
-    background-color: var(--primary);
+    padding: 8px;
+    background: #007bff;
     color: white;
     border: none;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 14px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
   }
-
-  .btn-random:hover {
-    background-color: var(--primary-hover);
-  }
-
-  .btn-random:active {
-    transform: scale(0.98);
-  }
-
-  .footer-info {
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 16px;
+  button:hover { background: #0056b3; }
+  .checkboxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1> Safe Food Randomizer</h1>
-  <p class="subtitle">Check your allergies and roll for a safe meal!</p>
+<div class="card">
+  <h2>Safe Food Randomizer</h2>
+  <p style="font-size: 13px; color: #666;">Check things to avoid:</p>
+  
+  <div class="checkboxes" id="cList"></div>
 
-  <div class="allergy-section">
-    <div class="allergy-title"> Things I want to avoid:</div>
-    <div class="allergy-grid">
-      <label class="checkbox-label"><input type="checkbox" value="seafood" onchange="filterMenu()"> Seafood</label>
-      <label class="checkbox-label"><input type="checkbox" value="fish" onchange="filterMenu()"> Fish</label>
-      <label class="checkbox-label"><input type="checkbox" value="peanut" onchange="filterMenu()"> Peanuts</label>
-      <label class="checkbox-label"><input type="checkbox" value="egg" onchange="filterMenu()"> Eggs</label>
-      <label class="checkbox-label"><input type="checkbox" value="pork" onchange="filterMenu()"> Pork</label>
-      <label class="checkbox-label"><input type="checkbox" value="beef" onchange="filterMenu()"> Beef</label>
-      <label class="checkbox-label"><input type="checkbox" value="chicken" onchange="filterMenu()"> Chicken</label>
-      <label class="checkbox-label"><input type="checkbox" value="dairy" onchange="filterMenu()"> Dairy / Cheese</label>
-      <label class="checkbox-label"><input type="checkbox" value="gluten" onchange="filterMenu()"> Gluten / Wheat</label>
-      <label class="checkbox-label"><input type="checkbox" value="spicy" onchange="filterMenu()"> Spicy Food</label>
-    </div>
+  <div class="box">
+    <div id="status" style="font-size: 12px; color: #666;">Ready</div>
+    <div id="result" style="font-size: 16px; font-weight: bold; margin-top: 5px;">Click random button</div>
   </div>
 
-  <div class="result-box">
-    <div class="result-category" id="resultCategory">Ready to roll</div>
-    <div class="result-name" id="resultName">Click button below!</div>
-  </div>
-
-  <button class="btn-random" onclick="randomFood()"> Randomize Food</button>
-  <div class="footer-info" id="availableCount">Available foods: 50 items</div>
+  <button onclick="pickFood()">Random</button>
+  <div id="count" style="font-size: 12px; color: #666; margin-top: 10px; text-align: right;"></div>
 </div>
 
 <script>
+  const tags = ["seafood", "fish", "peanut", "egg", "pork", "beef", "chicken", "dairy", "gluten", "spicy"];
   const foods = [
-    { name: "Egg Fried Rice", tags: ["egg", "gluten"] },
-    { name: "Tom Yum Shrimp", tags: ["seafood", "spicy"] },
-    { name: "Papaya Salad", tags: ["peanut", "spicy"] },
-    { name: "Pad Thai with Shrimp", tags: ["seafood", "peanut", "gluten"] },
-    { name: "Hainanese Chicken Rice", tags: ["chicken"] },
-    { name: "BBQ Pork with Rice", tags: ["pork", "gluten"] },
-    { name: "Braised Pork Leg", tags: ["pork"] },
-    { name: "Beef Noodle Soup", tags: ["beef", "gluten"] },
-    { name: "Spicy Minced Pork Noodle", tags: ["pork", "peanut", "spicy", "gluten"] },
-    { name: "Beef Steak with Black Pepper", tags: ["beef", "spicy"] },
-    { name: "Spicy Chicken Steak", tags: ["chicken", "spicy"] },
-    { name: "Spaghetti Carbonara", tags: ["dairy", "pork", "gluten", "egg"] },
-    { name: "Bacon Garlic Spaghetti", tags: ["pork", "spicy", "gluten"] },
-    { name: "Cheese Pizza", tags: ["dairy", "gluten"] },
-    { name: "Pork Burger", tags: ["pork", "dairy", "gluten", "egg"] },
-    { name: "Grilled Chicken Salad", tags: ["chicken"] },
-    { name: "Glass Noodle Spicy Salad", tags: ["seafood", "pork", "spicy"] },
-    { name: "Green Curry Chicken", tags: ["chicken", "spicy"] },
-    { name: "Red Curry Roasted Duck", tags: ["spicy"] },
-    { name: "Omelet with Minced Pork", tags: ["egg", "pork"] },
-    { name: "Steamed Egg", tags: ["egg"] },
-    { name: "Fried Fish with Garlic", tags: ["fish"] },
-    { name: "Steamed Fish in Soy Sauce", tags: ["fish", "gluten"] },
-    { name: "Tofu Clear Soup", tags: ["pork"] },
-    { name: "Garlic Fried Rice with Beef Steak", tags: ["beef", "gluten"] },
-    { name: "Roasted Duck Rice", tags: ["pork"] },
-    { name: "Pork Gravy Noodles", tags: ["pork", "gluten"] },
-    { name: "Stir-Fried Soy Sauce Noodles", tags: ["pork", "egg", "gluten"] },
-    { name: "Seafood Sukiyaki (Dry)", tags: ["seafood", "egg"] },
-    { name: "Mixed Sukiyaki (Soup)", tags: ["seafood", "pork", "egg"] },
-    { name: "Fish Rice Soup", tags: ["fish"] },
-    { name: "Minced Pork Rice Soup", tags: ["pork"] },
-    { name: "Egg Noodle with BBQ Pork", tags: ["pork", "gluten", "egg"] },
-    { name: "Tonkatsu Pork Cutlet Rice", tags: ["pork", "egg", "gluten"] },
-    { name: "Japanese Beef Curry", tags: ["beef", "dairy", "gluten"] },
-    { name: "Crispy Catfish Salad", tags: ["fish", "peanut", "spicy"] },
-    { name: "Spicy Minced Pork (Larb)", tags: ["pork", "spicy"] },
-    { name: "Spicy Grilled Chicken Salad", tags: ["chicken", "spicy"] },
-    { name: "Grilled Chicken", tags: ["chicken"] },
-    { name: "Charcoal-Grilled Pork Neck", tags: ["pork"] },
-    { name: "Shrimp Cake", tags: ["seafood", "gluten"] },
-    { name: "Salted Fried Chicken Wings", tags: ["chicken"] },
-    { name: "Basil Chicken with Fried Egg", tags: ["chicken", "egg", "spicy"] },
-    { name: "Stir-Fried Pork with Red Curry Paste", tags: ["pork", "spicy"] },
-    { name: "Crispy Pork with Kale", tags: ["pork", "spicy", "gluten"] },
-    { name: "Stir-Fried Morning Glory", tags: ["spicy"] },
-    { name: "Crab Fried Rice", tags: ["seafood", "egg"] },
-    { name: "Grilled Beef Rice Bowl", tags: ["beef", "gluten"] },
-    { name: "Grilled Salmon with Salt", tags: ["fish"] },
-    { name: "Assorted Sushi Rolls", tags: ["fish", "gluten"] }
+    {n: "Egg Fried Rice", t: ["egg", "gluten"]}, {n: "Tom Yum", t: ["seafood", "spicy"]},
+    {n: "Papaya Salad", t: ["peanut", "spicy"]}, {n: "Pad Thai", t: ["seafood", "peanut", "gluten"]},
+    {n: "Chicken Rice", t: ["chicken"]}, {n: "Pork Rice", t: ["pork", "gluten"]},
+    {n: "Beef Soup", t: ["beef", "gluten"]}, {n: "Spaghetti", t: ["dairy", "pork", "gluten"]},
+    {n: "Cheese Pizza", t: ["dairy", "gluten"]}, {n: "Burger", t: ["pork", "gluten", "egg"]},
+    {n: "Green Curry", t: ["chicken", "spicy"]}, {n: "Omelet", t: ["egg", "pork"]},
+    {n: "Fried Fish", t: ["fish"]}, {n: "Tofu Soup", t: ["pork"]},
+    {n: "Duck Rice", t: ["pork"]}, {n: "Sukiyaki", t: ["seafood", "pork", "egg"]},
+    {n: "Fish Soup", t: ["fish"]}, {n: "Larb Pork", t: ["pork", "spicy"]},
+    {n: "Grilled Chicken", t: ["chicken"]}, {n: "Shrimp Cake", t: ["seafood", "gluten"]},
+    {n: "Basil Chicken", t: ["chicken", "egg", "spicy"]}, {n: "Morning Glory", t: ["spicy"]},
+    {n: "Crab Rice", t: ["seafood", "egg"]}, {n: "Salmon", t: ["fish"]}, {n: "Sushi", t: ["fish", "gluten"]}
   ];
 
-  let filtered = [...foods];
+  let cBox = document.getElementById('cList');
+  tags.forEach(tag => {
+    cBox.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
+  });
 
-  function filterMenu() {
-    const checked = Array.from(document.querySelectorAll('.allergy-section input:checked')).map(cb => cb.value);
+  let available = [];
+  function updateList() {
+    let checked = Array.from(document.querySelectorAll('input:checked')).map(cb => cb.value);
+    available = foods.filter(f => !f.t.some(x => checked.includes(x)));
+    document.getElementById('count').innerText = "Available: " + available.length + " items";
     
-    filtered = foods.filter(food => !food.tags.some(tag => checked.includes(tag)));
-
-    document.getElementById('availableCount').textContent = `Available foods: ${filtered.length} items`;
-    
-    if (filtered.length === 0) {
-      document.getElementById('resultCategory').textContent = "Warning";
-      document.getElementById('resultName').textContent = "No food left! Please uncheck some filters.";
+    if(available.length === 0) {
+      document.getElementById('status').innerText = "Error";
+      document.getElementById('result').innerText = "No food available!";
     } else {
-      document.getElementById('resultCategory').textContent = "Ready to roll";
-      document.getElementById('resultName').textContent = "Click button below!";
+      document.getElementById('status').innerText = "Ready";
+      document.getElementById('result').innerText = "Click random button";
     }
   }
-  function randomFood() {
-    if (filtered.length === 0) {
-      alert("Please uncheck some filters first, no food available!");
+
+  function pickFood() {
+    if(available.length === 0) {
+      alert("Please uncheck some filters!");
       return;
     }
-
-    const nameEl = document.getElementById('resultName');
-    const catEl = document.getElementById('resultCategory');
-    catEl.textContent = "Randomizing...";
-
     let count = 0;
+    document.getElementById('status').innerText = "Randomizing...";
     let timer = setInterval(() => {
-      let randomItem = filtered[Math.floor(Math.random() * filtered.length)];
-      nameEl.textContent = randomItem.name;
+      let rand = available[Math.floor(Math.random() * available.length)].n;
+      document.getElementById('result').innerText = rand;
       count++;
-
-      if (count > 10) {
+      if(count > 8) {
         clearInterval(timer);
-        let finalItem = filtered[Math.floor(Math.random() * filtered.length)];
-        catEl.textContent = " Recommended for you:";
-        nameEl.textContent = finalItem.name;
+        document.getElementById('status').innerText = "Selected:";
       }
     }, 50);
   }
+
+  updateList();
 </script>
 
 </body>
