@@ -109,8 +109,8 @@
     let count = 0;
     document.getElementById('status').innerText = "Randomizing...";
     let timer = setInterval(() => {
-      let rand = available[Math.floor(Math.random() * available.length)].n;
-      document.getElementById('result').innerText = rand;
+      let random = available[Math.floor(Math.random() * available.length)].n;
+      document.getElementById('result').innerText = random;
       count++;
       if(count > 8) {
         clearInterval(timer);
