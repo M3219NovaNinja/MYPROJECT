@@ -67,18 +67,18 @@
 <script>
   const tags = ["seafood", "fish", "peanut", "egg", "pork", "beef", "chicken", "dairy", "gluten", "spicy"];
   const foods = [
-    {n: "Egg Fried Rice", t: ["egg", "gluten"]}, {n: "Tom Yum", t: ["seafood", "spicy"]},
-    {n: "Papaya Salad", t: ["peanut", "spicy"]}, {n: "Pad Thai", t: ["seafood", "peanut", "gluten"]},
-    {n: "Chicken Rice", t: ["chicken"]}, {n: "Pork Rice", t: ["pork", "gluten"]},
-    {n: "Beef Soup", t: ["beef", "gluten"]}, {n: "Spaghetti", t: ["dairy", "pork", "gluten"]},
-    {n: "Cheese Pizza", t: ["dairy", "gluten"]}, {n: "Burger", t: ["pork", "gluten", "egg"]},
-    {n: "Green Curry", t: ["chicken", "spicy"]}, {n: "Omelet", t: ["egg", "pork"]},
-    {n: "Fried Fish", t: ["fish"]}, {n: "Tofu Soup", t: ["pork"]},
-    {n: "Duck Rice", t: ["pork"]}, {n: "Sukiyaki", t: ["seafood", "pork", "egg"]},
-    {n: "Fish Soup", t: ["fish"]}, {n: "Larb Pork", t: ["pork", "spicy"]},
-    {n: "Grilled Chicken", t: ["chicken"]}, {n: "Shrimp Cake", t: ["seafood", "gluten"]},
-    {n: "Basil Chicken", t: ["chicken", "egg", "spicy"]}, {n: "Morning Glory", t: ["spicy"]},
-    {n: "Crab Rice", t: ["seafood", "egg"]}, {n: "Salmon", t: ["fish"]}, {n: "Sushi", t: ["fish", "gluten"]}
+    {name: "Egg Fried Rice", type: ["egg", "gluten"]}, {name: "Tom Yum", type: ["seafood", "spicy"]},
+    {name: "Papaya Salad", type: ["peanut", "spicy"]}, {name: "Pad Thai", type: ["seafood", "peanut", "gluten"]},
+    {name: "Chicken Rice", type: ["chicken"]}, {name: "Pork Rice", type: ["pork", "gluten"]},
+    {name: "Beef Soup", type: ["beef", "gluten"]}, {name: "Spaghetti", type: ["dairy", "pork", "gluten"]},
+    {name: "Cheese Pizza", type: ["dairy", "gluten"]}, {name: "Burger", type: ["pork", "gluten", "egg"]},
+    {name: "Green Curry", type: ["chicken", "spicy"]}, {name: "Omelet", type: ["egg", "pork"]},
+    {name: "Fried Fish", type: ["fish"]}, {name: "Tofu Soup", type: ["pork"]},
+    {name: "Duck Rice", type: ["pork"]}, {name: "Sukiyaki", type: ["seafood", "pork", "egg"]},
+    {name: "Fish Soup", type: ["fish"]}, {name: "Larb Pork", type: ["pork", "spicy"]},
+    {name: "Grilled Chicken", type: ["chicken"]}, {name: "Shrimp Cake", type: ["seafood", "gluten"]},
+    {name: "Basil Chicken", type: ["chicken", "egg", "spicy"]}, {name: "Morning Glory", type: ["spicy"]},
+    {name: "Crab Rice", type: ["seafood", "egg"]}, {name: "Salmon", type: ["fish"]}, {name: "Sushi", type: ["fish", "gluten"]}
   ];
 
   let CheckBox = document.getElementById('cList');
@@ -88,8 +88,8 @@
 
   let available = [];
   function updateList() {
-    let checked = Array.from(document.querySelectorAll('input:checked')).map(cb => cb.value);
-    available = foods.filter(f => !f.t.some(x => checked.includes(x)));
+    let checked = Array.from(document.querySelectorAll('input:checked')).map(CheckBox => CheckBox.value);
+    available = foods.filter(foods => !foods.type.some(x => checked.includes(x)));
     document.getElementById('count').innerText = "Available: " + available.length + " items";
     
     if(available.length === 0) {
