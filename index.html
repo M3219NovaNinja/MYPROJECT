@@ -81,9 +81,9 @@
     {n: "Crab Rice", t: ["seafood", "egg"]}, {n: "Salmon", t: ["fish"]}, {n: "Sushi", t: ["fish", "gluten"]}
   ];
 
-  let cBox = document.getElementById('cList');
+  let CheckBox = document.getElementById('cList');
   tags.forEach(tag => {
-    cBox.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
+    CheckBox.innerHTML += `<label><input type="checkbox" value="${tag}" onchange="updateList()"> ${tag}</label>`;
   });
 
   let available = [];
